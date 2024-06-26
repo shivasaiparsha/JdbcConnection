@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Console appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File appender -->
+    <appender name="Custom_Logger" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>Custom_Errors.txt</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+
+            <fileNamePattern>Custom_Errors-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <!-- each file should be at most 20MB, keep 182 days worth of history,but
+              at most 500MB -->
+            <maxFileSize>20MB</maxFileSize> // size
+            <maxHistory>2</maxHistory> // days
+            <totalSizeCap>500MB</totalSizeCap> // max mb
+        </rollingPolicy>
+
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %date %level [%thread] [%file:%line] %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!-- Logger configuration -->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="Custom_Logger"/>
+    </root>
+</configuration>
